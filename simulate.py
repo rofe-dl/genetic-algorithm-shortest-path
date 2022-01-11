@@ -1,13 +1,20 @@
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from configparser import ConfigParser
 from random import randint
 
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
+from plotter import init_plot
+
 parser = ConfigParser()
 parser.read('config.ini')
+
 obstacles = []
+path_point_x = []
+path_point_y = []
+source = []
+goal = []
 
 # random obstacles
 # obstacle within axis range, no overlap between obstacles
@@ -15,42 +22,36 @@ obstacles = []
 # obstacle count low so low chance of overlap
 
 def main():
-    axes = parser['Plot Axes']
-    plt.axis([int(axes['x_start']), 
-        int(axes['x_end']),
-        int(axes['y_start']),
-        int(axes['y_end'])])
+    init_obstacles()
+    init_path_points()
 
-    plot_obstacles()
-    plot_path_points()
-
-    plt.show()
-
-def plot():
-
-    flag = True
-
-    for i in range (5):
-
-        plt.clf()
-        plot_obstacles()
-        plot_path_points()
-        
-        if flag:
-            plt.plot([3, 5], [2, 6], '-')
-        else:
-            plt.plot([3, 6], [2, 7], '-')
-
-        plt.pause(0.5)
-
-        flag = not flag
-
-    plt.show()
+    init_plot(obstacles, path_point_x, path_point_y, source, goal)
     
 
-def plot_path_points():
-    node_x = []
-    node_y = []
+# def plot():
+
+#     flag = True
+
+#     for i in range (5):
+
+#         plt.clf()
+#         plot_obstacles()
+#         plot_path_points()
+        
+#         if flag:
+#             plt.plot([3, 5], [2, 6], '-')
+#         else:
+#             plt.plot([3, 6], [2, 7], '-')
+
+#         plt.pause(0.5)
+
+#         flag = not flag
+
+#     plt.show()
+    
+
+def init_path_points():
+    
     axes = parser['Plot Axes']
 
     if parser['Path Points'].getboolean('generate_randomly'):
@@ -63,8 +64,8 @@ def plot_path_points():
         number_of_pathpoints = int(parser['Path Points']['number_of_pathpoints'])
         for i in range(number_of_pathpoints):
             path_point = generate_path_point()
-            node_x.append(path_point[0])
-            node_y.append(path_point[1])
+            path_point_x.append(path_point[0])
+            path_point_y.append(path_point[1])
 
     else:
         source_x = eval(parser['Hardcoded Path Points']['source'])[0] + 1
@@ -75,12 +76,12 @@ def plot_path_points():
 
         # eval will create the list from the string representation of list in config.ini
         for element in eval(parser['Hardcoded Path Points']['path_points']):
-            node_x.append(element[0])
-            node_y.append(element[1])
+            path_point_x.append(element[0])
+            path_point_y.append(element[1])
 
-    plt.plot(node_x, node_y, "k.")
-    plt.plot(source_x, source_y, "bo")
-    plt.plot(goal_x, goal_y, "go")
+    source.extend([source_x, source_y])
+    goal.extend([goal_x, goal_y])
+
 
 def generate_path_point():
     axes = parser['Plot Axes']
@@ -103,19 +104,11 @@ def path_point_in_obstacle(x, y):
     
     return False
 
-def plot_obstacles():
+def init_obstacles():
 
     for i in range(int(parser['Obstacles']['number_of_obstacles'])):
         obstacle = eval(parser['Hardcoded Obstacles'][f"obstacle_{i+1}"])
         obstacles.append(obstacle)
-
-        x_values, y_values = [], []
-
-        for vertex in obstacle:
-            x_values.append(vertex[0])
-            y_values.append(vertex[1])
-        
-        plt.fill(x_values, y_values, 'r')
 
 if __name__ == '__main__':
     
