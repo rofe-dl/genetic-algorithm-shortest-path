@@ -6,7 +6,7 @@ from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
 parser = ConfigParser()
-parser.read('./config.ini')
+parser.read('config.ini')
 obstacles = []
 
 # random obstacles
@@ -89,23 +89,17 @@ def path_point_in_obstacle(x, y):
 
 def plot_obstacles():
 
-    obs_1_x = [2.5, 3.5, 3.5, 2.5, 2.5]
-    obs_1_y = [9, 9, 12, 12, 9]
-    plt.fill(obs_1_x, obs_1_y, "r")
-    obstacles.append([(2.5, 9), (3.5, 9), (3.5, 12), (2.5, 12)])
+    for i in range(int(parser['Obstacles']['number_of_obstacles'])):
+        obstacle = eval(parser['Hardcoded Obstacles'][f"obstacle_{i+1}"])
+        obstacles.append(obstacle)
 
-    obs_2_x = [3, 4, 4, 3, 3]
-    obs_2_y = [6.5, 6.5, 4, 4, 6.5]
-    plt.fill(obs_2_x, obs_2_y, "r")
-    obstacles.append([(3, 6.5), (4, 6.5), (4, 4), (3, 4)])
+        x_values, y_values = [], []
 
-    obs_3_x = [7, 9, 9, 7, 7]
-    obs_3_y = [12, 12, 13, 13, 12]
-    plt.fill(obs_3_x, obs_3_y, "r")
-    obstacles.append([(7, 12), (9, 12), (9, 13), (7, 13)])
-
-def generate_obstacle():
-    pass
+        for vertex in obstacle:
+            x_values.append(vertex[0])
+            y_values.append(vertex[1])
+        
+        plt.fill(x_values, y_values, 'r')
 
 if __name__ == '__main__':
     
