@@ -23,6 +23,7 @@ def main():
 
     plot_obstacles()
     plot_path_points()
+
     plt.show()
 
 def plot():
@@ -50,8 +51,15 @@ def plot():
 def plot_path_points():
     node_x = []
     node_y = []
+    axes = parser['Plot Axes']
 
     if parser['Path Points'].getboolean('generate_randomly'):
+        source_x = int(axes['x_start']) + 1
+        source_y = randint(int(axes['y_start']), int(axes['y_end']))
+
+        goal_x = int(axes['x_end']) - 1
+        goal_y = randint(int(axes['y_start']), int(axes['y_end']))
+
         number_of_pathpoints = int(parser['Path Points']['number_of_pathpoints'])
         for i in range(number_of_pathpoints):
             path_point = generate_path_point()
@@ -59,12 +67,20 @@ def plot_path_points():
             node_y.append(path_point[1])
 
     else:
+        source_x = eval(parser['Hardcoded Path Points']['source'])[0] + 1
+        source_y = eval(parser['Hardcoded Path Points']['source'])[1]
+
+        goal_x = eval(parser['Hardcoded Path Points']['goal'])[0] - 1
+        goal_y = eval(parser['Hardcoded Path Points']['goal'])[1]
+
         # eval will create the list from the string representation of list in config.ini
         for element in eval(parser['Hardcoded Path Points']['path_points']):
             node_x.append(element[0])
             node_y.append(element[1])
 
     plt.plot(node_x, node_y, "k.")
+    plt.plot(source_x, source_y, "bo")
+    plt.plot(goal_x, goal_y, "go")
 
 def generate_path_point():
     axes = parser['Plot Axes']
