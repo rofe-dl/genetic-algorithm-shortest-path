@@ -1,31 +1,34 @@
 # import matplotlib.pyplot as plt
-from configparser import ConfigParser
+# from configparser import ConfigParser
 from random import randint
 
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
-from plotter import init_plot
-
-parser = ConfigParser()
-parser.read('config.ini')
+from config_parser import parser
+import genetic_algorithm
 
 obstacles = []
-path_point_x = []
-path_point_y = []
-source = []
-goal = []
+path_points = []
+source = ()
+goal = ()
 
-# random obstacles
 # obstacle within axis range, no overlap between obstacles
-# path points not in obstacles
+# without link probabilities, slower but more dynamic
 # obstacle count low so low chance of overlap
+# show length of the path and legend on the plot
+# reward chromosome for reaching the goal
+# problem of path point being very close to obstacle, so minus plus it out
+# credit author and say what we did differently
+# reward chromosome for reaching the goal
+# repair chromosome if not valid as improvement
+# check only nearest polygons for overlapping as improvement
 
 def main():
-    init_obstacles()
-    init_path_points()
+    _init_obstacles()
+    _init_path_points()
 
-    init_plot(obstacles, path_point_x, path_point_y, source, goal)
+    genetic_algorithm.start(obstacles, path_points, source, goal)
     
 
 # def plot():
@@ -50,7 +53,7 @@ def main():
 #     plt.show()
     
 
-def init_path_points():
+def _init_path_points():
     
     axes = parser['Plot Axes']
 
@@ -61,39 +64,37 @@ def init_path_points():
         goal_x = int(axes['x_end']) - 1
         goal_y = randint(int(axes['y_start']), int(axes['y_end']))
 
-        number_of_pathpoints = int(parser['Path Points']['number_of_pathpoints'])
-        for i in range(number_of_pathpoints):
-            path_point = generate_path_point()
-            path_point_x.append(path_point[0])
-            path_point_y.append(path_point[1])
+        number_of_path_points = int(parser['Path Points']['number_of_path_points'])
+        for i in range(number_of_path_points):
+            path_points.append(_generate_path_point())
 
     else:
-        source_x = eval(parser['Hardcoded Path Points']['source'])[0] + 1
+        source_x = eval(parser['Hardcoded Path Points']['source'])[0]
         source_y = eval(parser['Hardcoded Path Points']['source'])[1]
 
-        goal_x = eval(parser['Hardcoded Path Points']['goal'])[0] - 1
+        goal_x = eval(parser['Hardcoded Path Points']['goal'])[0]
         goal_y = eval(parser['Hardcoded Path Points']['goal'])[1]
 
         # eval will create the list from the string representation of list in config.ini
         for element in eval(parser['Hardcoded Path Points']['path_points']):
-            path_point_x.append(element[0])
-            path_point_y.append(element[1])
+            path_points.append(element)
 
-    source.extend([source_x, source_y])
-    goal.extend([goal_x, goal_y])
+    global source, goal
+    source = (source_x, source_y)
+    goal = (goal_x, goal_y)
 
 
-def generate_path_point():
+def _generate_path_point():
     axes = parser['Plot Axes']
 
     while True:
-        x = randint( int(axes['x_start'])+1, int(axes['x_end']) )
-        y = randint( int(axes['y_start'])+1, int(axes['y_end']) )
+        x = randint( int(axes['x_start'])+1, int(axes['x_end'])-1 )
+        y = randint( int(axes['y_start'])+1, int(axes['y_end'])-1 )
         
-        if not path_point_in_obstacle(x, y):
+        if not _path_point_in_obstacle(x, y):
             return (x, y)
 
-def path_point_in_obstacle(x, y):
+def _path_point_in_obstacle(x, y):
     point = Point(x, y)
     
     for obstacle in obstacles:
@@ -104,7 +105,7 @@ def path_point_in_obstacle(x, y):
     
     return False
 
-def init_obstacles():
+def _init_obstacles():
 
     for i in range(int(parser['Obstacles']['number_of_obstacles'])):
         obstacle = eval(parser['Hardcoded Obstacles'][f"obstacle_{i+1}"])
