@@ -4,7 +4,7 @@ from random import randint
 
 from shapely.geometry import Polygon, LineString
 
-from plotter import plot
+from utils.plotter import plot
 
 def start(obstacles, path_points):
 
