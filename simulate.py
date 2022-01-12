@@ -14,15 +14,13 @@ path_points = []
 # obstacle within axis range, no overlap between obstacles
 # without link probabilities, slower but more dynamic
 # obstacle count low so low chance of overlap
-# show length of the path and legend on the plot
-# reward chromosome for reaching the goal
 # problem of path point being very close to obstacle, so minus plus it out
 # credit author and say what we did differently
-# reward chromosome for reaching the goal
 # repair chromosome if not valid as improvement
 # check only nearest polygons for overlapping as improvement
 # first and last index of path_points is the source and goal
 # randomizing obstacles as improvement
+# had to prevent mutating source and goal genes
 
 def main():
     _init_obstacles()
@@ -71,6 +69,7 @@ def _generate_path_point():
 
 def _path_point_near_obstacle(x, y):
     point = Point(x, y)
+
     # forms a radius of 1 around the point to check if point is near any obstacle
     circle_perimeter = point.buffer(1).boundary
     

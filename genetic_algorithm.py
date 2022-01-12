@@ -4,7 +4,7 @@ from random import randint
 
 from shapely.geometry import Polygon, LineString
 
-from plotter import init_plot
+from plotter import plot
 
 def start(obstacles, path_points):
 
@@ -14,7 +14,7 @@ def start(obstacles, path_points):
     for chromosome in population:
         path_lengths.append(_calculate_path_length(chromosome, path_points))
 
-    # init_plot(obstacles, path_points, population, path_lengths, 1, False)
+    plot(obstacles, path_points, population, path_lengths, 1, False)
 
     generations = int(parser['Genetic Algorithm']['max_generations'])
     
@@ -23,7 +23,6 @@ def start(obstacles, path_points):
         path_lengths.clear()
 
         fitness_list = _sort_by_fitness(population, path_points)
-        
 
         for chromosome in population:
             while True:
@@ -42,11 +41,7 @@ def start(obstacles, path_points):
             new_population.append(child)
 
         population = new_population 
-        # init_plot(obstacles, path_points, new_population, path_lengths, (gen+2), last_gen=True if gen == generations-1 else False )
-        path_lengths.sort()
-        for f in path_lengths:
-            print(f)
-        print('====================')
+        plot(obstacles, path_points, new_population, path_lengths, (gen+2), last_gen=True if gen == generations-2 else False )
 
 
 def _mutation(chromosome):
@@ -83,8 +78,6 @@ def _choose_random_parent(fitness_list):
     return parent_to_fitness[0]
 
 def _crossover(parent1, parent2):
-
-    # split_size = randint(0, len(parent1))
     split_size = math.floor(0.5 * len(parent1))
 
     return ''.join([parent1[:split_size], parent2[split_size:]])
@@ -94,7 +87,7 @@ def _generate_population(path_points, obstacles):
     population_size = int(parser['Genetic Algorithm']['population_size'])
 
     population = []
-
+    print('Generating initial population, please wait ....')
     for i in range(population_size):
         while True:
 
@@ -103,7 +96,8 @@ def _generate_population(path_points, obstacles):
             if _chromosome_valid(chromosome, obstacles, path_points):
                 population.append(chromosome)
                 break
-
+    print('Successfully created initial population')
+    print('Simulating genetic algorithm for path planning ....')
     return population
 
 def _generate_chromosome(path_points):
@@ -111,7 +105,7 @@ def _generate_chromosome(path_points):
     chromosome = '1' # source is always visited
     for i in range(len(path_points) - 2):
         chromosome += '0' if randint(1, 10) > 5 else '1'
-    chromosome += '1' # goal is always reached
+    chromosome += '1' # goal is always visited
     
     return chromosome
 
