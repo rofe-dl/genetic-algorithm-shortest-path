@@ -22,6 +22,7 @@ path_points = []
 # repair chromosome if not valid as improvement
 # check only nearest polygons for overlapping as improvement
 # first and last index of path_points is the source and goal
+# randomizing obstacles as improvement
 
 def main():
     _init_obstacles()

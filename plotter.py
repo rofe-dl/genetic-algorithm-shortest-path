@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from config.config_parser import parser
 
-def init_plot(obstacles, path_points, population):
+def init_plot(obstacles, path_points, population, last_gen):
     axes = parser['Plot Axes']
     plt.axis([int(axes['x_start']), 
         int(axes['x_end']),
@@ -19,8 +19,9 @@ def init_plot(obstacles, path_points, population):
         plt.plot(path_x, path_y, '-')
 
         plt.pause(0.5)
-
-    plt.show()
+        
+    if last_gen:
+        plt.show()
     
 def plot_path_points(path_points):
     path_point_x = [path_point[0] for path_point in path_points]
