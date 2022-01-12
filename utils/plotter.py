@@ -61,7 +61,7 @@ def _plot_path_points(path_points):
     plt.plot(path_point_x[0], path_point_y[0], "bo", label='Source')
     plt.plot(path_point_x[-1], path_point_y[-1], "go", label='Goal')
 
-    plt.legend(loc="upper left")
+    plt.legend(loc="upper center")
 
 def _plot_obstacles(obstacles):
     

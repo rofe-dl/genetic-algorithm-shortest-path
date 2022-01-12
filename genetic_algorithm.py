@@ -97,7 +97,7 @@ def _generate_population(path_points, obstacles):
                 population.append(chromosome)
                 break
     print('Successfully created initial population')
-    print('Simulating genetic algorithm for path planning ....')
+    print('Simulating genetic algorithm for path planning .... (Press Ctrl+C to stop)')
     return population
 
 def _generate_chromosome(path_points):
