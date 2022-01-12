@@ -6,10 +6,9 @@ from shapely.geometry import Polygon, LineString
 
 from plotter import init_plot
 
-def start(obstacles, path_points, source, goal):
-    population = _generate_population(path_points, source, goal, obstacles)
-
-    init_plot(obstacles, path_points, source, goal, population)
+def start(obstacles, path_points):
+    population = _generate_population(path_points, obstacles)
+    init_plot(obstacles, path_points, population)
 
 def _mutation():
     pass
@@ -26,7 +25,7 @@ def _choose_parents():
 def _crossover():
     pass
 
-def _generate_population(path_points, source, goal, obstacles):
+def _generate_population(path_points, obstacles):
 
     population_size = int(parser['Genetic Algorithm']['population_size'])
 
@@ -38,8 +37,6 @@ def _generate_population(path_points, source, goal, obstacles):
             chromosome = _generate_chromosome(path_points)
 
             if _chromosome_valid(chromosome, obstacles, path_points):
-                # add the source and goal separately afterwards
-                chromosome = '1' + chromosome + '0' if randint(1, 10) > 5 else '1'
                 population.append(chromosome)
                 break
 
@@ -47,8 +44,8 @@ def _generate_population(path_points, source, goal, obstacles):
 
 def _generate_chromosome(path_points):
 
-    chromosome = ''
-    for i in range(len(path_points)):
+    chromosome = '1' # source is always visited, so do it outside loop
+    for i in range(len(path_points) - 1):
         chromosome += '0' if randint(1, 10) > 5 else '1'
     
     return chromosome
@@ -81,7 +78,6 @@ def _path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
 
         obstacle = Polygon(obstacle)
         if path.intersects(obstacle):
-            print (True)
             return True
 
     return False

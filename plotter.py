@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from config.config_parser import parser
 
-def init_plot(obstacles, path_points, source, goal, population):
+def init_plot(obstacles, path_points, population):
     axes = parser['Plot Axes']
     plt.axis([int(axes['x_start']), 
         int(axes['x_end']),
@@ -11,30 +11,24 @@ def init_plot(obstacles, path_points, source, goal, population):
     for chromosome in population:
         plt.clf()
         plot_obstacles(obstacles)
-        plot_path_points(path_points, source, goal)
+        plot_path_points(path_points)
         
-        path_x, path_y = [source[0]], [source[1]] # add the source separately
-        
-        path_x.extend([path_points[i][0] for i, c in enumerate(chromosome[1:-1]) if c == '1'])
-        path_y.extend([path_points[i][1] for i, c in enumerate(chromosome[1:-1]) if c == '1'])
-
-        if chromosome[-1] == '1':
-            path_x.append(goal[0])
-            path_y.append(goal[1])
+        path_x = [path_points[i][0] for i, c in enumerate(chromosome) if c == '1']
+        path_y = [path_points[i][1] for i, c in enumerate(chromosome) if c == '1']
 
         plt.plot(path_x, path_y, '-')
 
-        plt.pause(1)
+        plt.pause(0.5)
 
     plt.show()
     
-def plot_path_points(path_points, source, goal):
+def plot_path_points(path_points):
     path_point_x = [path_point[0] for path_point in path_points]
     path_point_y = [path_point[1] for path_point in path_points]
 
-    plt.plot(path_point_x, path_point_y, "k.")
-    plt.plot(source[0], source[1], "bo")
-    plt.plot(goal[0], goal[1], "go")
+    plt.plot(path_point_x[1:-1], path_point_y[1:-1], "k.")
+    plt.plot(path_point_x[0], path_point_y[0], "bo")
+    plt.plot(path_point_x[-1], path_point_y[-1], "go")
 
 def plot_obstacles(obstacles):
     
