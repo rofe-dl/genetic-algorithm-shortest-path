@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from config_parser import parser
+from config.config_parser import parser
 
 def init_plot(obstacles, path_points, source, goal, population):
     axes = parser['Plot Axes']
@@ -24,7 +24,7 @@ def init_plot(obstacles, path_points, source, goal, population):
 
         plt.plot(path_x, path_y, '-')
 
-        plt.pause(2)
+        plt.pause(1)
 
     plt.show()
     

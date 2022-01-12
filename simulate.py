@@ -5,7 +5,7 @@ from random import randint
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
-from config_parser import parser
+from config.config_parser import parser
 import genetic_algorithm
 
 obstacles = []

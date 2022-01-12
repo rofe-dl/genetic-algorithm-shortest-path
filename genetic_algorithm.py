@@ -1,5 +1,5 @@
 import math
-from config_parser import parser
+from config.config_parser import parser
 from random import randint
 
 from shapely.geometry import Polygon, LineString
