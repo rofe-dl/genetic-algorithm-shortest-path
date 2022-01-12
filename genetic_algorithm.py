@@ -64,11 +64,13 @@ def _chromosome_valid(chromosome, obstacles, path_points):
             else:
                 path_point_2 = path_points[i]
 
-            if path_point_1 and path_point_2 and _path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
-                return False
+            if path_point_1 and path_point_2:
 
-            path_point_1 = path_point_2
-            path_point_2 = ()
+                if _path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
+                    return False
+
+                path_point_1 = path_point_2
+                path_point_2 = ()
     
     return True
 
@@ -79,6 +81,7 @@ def _path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
 
         obstacle = Polygon(obstacle)
         if path.intersects(obstacle):
+            print (True)
             return True
 
     return False
