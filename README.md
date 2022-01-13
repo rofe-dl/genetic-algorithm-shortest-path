@@ -38,7 +38,7 @@ There are hardcoded obstacles and path points available too for comparison purpo
 - For the fitness function, I've used the simple reciprocal of the total distance covered by the path.
 - To mutate, I choose any random bit from the chromosome and flip it. Source and goal bits are ignored.
 - Crossover is done by splitting parent chromosomes in two and joining with each other. Split size can be configured by user or done randomly.
-- Unlike Yaaximus' method, no probability or links are made between close path points that could increase a path's fitness as a more dynamic approach is tried here.
+- Unlike Yaaximus' method, no probability or links are made between close path points that could increase a path's fitness as a more dynamic approach is tried here. If we test using the hardcoded obstacles and path points, we can see the proposed solution finds a shorter path by skipping one path point.
 
 ## Improvements
 
@@ -46,5 +46,5 @@ The method is considerably bottlenecked by the valid chromosome check when initi
 
 ## Conclusion
 
-While slow, it is a tradeoff made to make a more adaptable algorithm that can work in more dynamic natures without manual intervention or setups. Speed can be improved by coming up with a better chromosome generation.
+While slow, it is a tradeoff made to make a more adaptable algorithm that can work in more dynamic natures without manual intervention or setups. In some cases, it can even come up with shorter paths. Speed can be improved by coming up with a better chromosome generation.
 
