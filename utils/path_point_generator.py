@@ -26,8 +26,9 @@ def _generate_path_point(obstacles):
     axes = parser['Plot Axes']
 
     while True:
-        x = randint( int(axes['x_start'])+1, int(axes['x_end'])-1 )
-        y = randint( int(axes['y_start'])+1, int(axes['y_end'])-1 )
+        # avoid path points being formed on the edges of the axes
+        x = randint( int(axes['x_start'])+2, int(axes['x_end'])-2 )
+        y = randint( int(axes['y_start'])+2, int(axes['y_end'])-2 )
         
         if not _path_point_near_obstacle(x, y, obstacles):
             return (x, y)
