@@ -26,6 +26,10 @@ You can change the setup variables in config/config.ini as you wish, although co
 
 There are hardcoded obstacles and path points available too for comparison purposes from Yaaximus' implementation, which are used automatically if `generated_randomly` in the config.ini is set to `false`.
 
+## Simulation
+
+![demo](https://raw.githubusercontent.com/rofe-dl/genetic-algorithm-shortest-path/master/demos/gif_demo.gif)
+
 ## Details
 
 - Chromosomes are binary coded and generated randomly, each bit representing whether that path point is visited or not. First and last bit are always 1, because source and goal are always visited. 
