@@ -1,6 +1,5 @@
 from config.config_parser import parser
 from random import randint
-from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
 def generate_obstacles(obstacles, number_of_obstacles):

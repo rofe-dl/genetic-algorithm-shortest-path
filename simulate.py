@@ -1,10 +1,3 @@
-# import matplotlib.pyplot as plt
-# from configparser import ConfigParser
-from random import randint
-
-from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
-
 from config.config_parser import parser
 from utils.obstacle_generator import generate_obstacles
 from utils.path_point_generator import generate_path_points
