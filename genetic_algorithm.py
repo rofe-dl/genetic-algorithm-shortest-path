@@ -78,7 +78,13 @@ def _choose_random_parent(fitness_list):
     return parent_to_fitness[0]
 
 def _crossover(parent1, parent2):
-    split_size = math.floor(0.5 * len(parent1))
+
+    if parser['Genetic Algorithm'].getboolean('crossover_split_random'):
+        split_size = randint(0, len(parent1))
+
+    else:
+        fraction = float(parser['Genetic Algorithm']['crossover_split_size'])
+        split_size = math.floor(fraction * len(parent1))
 
     return ''.join([parent1[:split_size], parent2[split_size:]])
 

@@ -13,21 +13,6 @@ import genetic_algorithm
 obstacles = []
 path_points = []
 
-# obstacle within axis range, no overlap between obstacles
-# without link probabilities, slower but more dynamic
-# obstacle count low so low chance of overlap
-# problem of path point being very close to obstacle, so minus plus it out
-# credit author and say what we did differently
-# repair chromosome if not valid as improvement
-# check only nearest polygons for overlapping as improvement
-# first and last index of path_points is the source and goal
-# randomizing obstacles as improvement
-# had to prevent mutating source and goal genes
-# source on very left, goal on very right
-# obstacle not too close to each other
-# importance of scaling each thing
-# obstacles too close to wall, so  box them in
-
 def main():
     _init_obstacles()
     _init_path_points()

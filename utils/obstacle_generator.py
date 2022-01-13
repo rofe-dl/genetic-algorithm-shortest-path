@@ -29,7 +29,8 @@ def _generate_obstacle():
 
     width = randint(1, max_width)
     height = randint(1, max_height)
-
+    
+    # to prevent obstacles from forming at the very edge of the axes
     point_x_2 = point_x_1 + width if point_x_1+width <= 0.6 * x_end else point_x_1 - width
     point_y_2 = point_y_1 + height if point_y_1+height <= 0.6 * y_end else point_y_1 - height
 
