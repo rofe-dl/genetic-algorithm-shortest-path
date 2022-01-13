@@ -8,11 +8,13 @@ def generate_path_points(path_points, obstacles):
     axes = parser['Plot Axes']
 
     source_x = int(axes['x_start']) + 1
-    source_y = randint(int(axes['y_start']), int(axes['y_end']))
+    source_y = int(axes['y_start']) + 1
+    # source_y = randint(int(axes['y_start']), int(axes['y_end']))
     path_points.append((source_x, source_y))
 
     goal_x = int(axes['x_end']) - 1
-    goal_y = randint(int(axes['y_start']), int(axes['y_end']))
+    goal_y = int(axes['y_end']) - 1
+    # goal_y = randint(int(axes['y_start']), int(axes['y_end']))
 
     number_of_path_points = int(parser['Path Points']['number_of_path_points'])
     for i in range(number_of_path_points):

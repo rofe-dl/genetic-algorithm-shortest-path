@@ -29,7 +29,7 @@ There are hardcoded obstacles and path points available too for comparison purpo
 ## Details
 
 - Chromosomes are binary coded and generated randomly, each bit representing whether that path point is visited or not. First and last bit are always 1, because source and goal are always visited. 
-- The source is always generated at the left, and the goal on the very right, varying only vertically. 
+- The source is always generated at the bottom left, and goal on the top right.
 - Path points are never generated very close to any obstacle, and obstacles also never overlap.
 - For the fitness function, I've used the simple reciprocal of the total distance covered by the path.
 - To mutate, I choose any random bit from the chromosome and flip it. Source and goal bits are ignored.
