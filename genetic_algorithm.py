@@ -6,9 +6,9 @@ from shapely.geometry import Polygon, LineString
 
 from utils.plotter import plot
 
-def start(obstacles, path_points):
+def start(obstacles, path_points, path_validity):
 
-    population = _generate_population(path_points, obstacles)
+    population = _generate_population(path_points, obstacles, path_validity)
     path_lengths = []
 
     for chromosome in population:
@@ -88,7 +88,7 @@ def _crossover(parent1, parent2):
 
     return ''.join([parent1[:split_size], parent2[split_size:]])
 
-def _generate_population(path_points, obstacles):
+def _generate_population(path_points, obstacles, path_validity):
 
     population_size = int(parser['Genetic Algorithm']['population_size'])
 
@@ -97,22 +97,40 @@ def _generate_population(path_points, obstacles):
     for i in range(population_size):
         while True:
 
-            chromosome = _generate_chromosome(path_points)
+            chromosome = _generate_chromosome(path_points, path_validity)
+            population.append(chromosome)
 
-            if _chromosome_valid(chromosome, obstacles, path_points):
-                population.append(chromosome)
-                break
+            # if _chromosome_valid(chromosome, obstacles, path_points):
+            #     population.append(chromosome)
+            #     break
+
     print('Successfully created initial population')
     print('Simulating genetic algorithm for path planning .... (Press Ctrl+C to stop)')
     return population
 
-def _generate_chromosome(path_points):
+def _generate_chromosome(path_points, path_validity):
 
     chromosome = '1' # source is always visited
-    for i in range(len(path_points) - 2):
-        chromosome += '0' if randint(1, 10) > 5 else '1'
-    chromosome += '1' # goal is always visited
+    previous_path_point = path_points[0] # keep track of the previous selected path point
+
+    # for i in range(len(path_points) - 2):
+    #     chromosome += '0' if randint(1, 10) > 5 else '1'
+    # chromosome += '1' # goal is always visited
     
+    for i in range(1, len(path_points)):
+        path_point = path_points[i]
+
+        if path_validity[previous_path_point][i]:
+            gene = '0' if randint(1, 10) > 5 else '1'
+
+            if gene == '1':
+                previous_path_point = path_point
+                chromosome += gene
+
+        else:
+            chromosome += '0'
+
+        # update previous path point
     return chromosome
 
 def _chromosome_valid(chromosome, obstacles, path_points):
@@ -128,7 +146,7 @@ def _chromosome_valid(chromosome, obstacles, path_points):
 
             if path_point_1 and path_point_2:
 
-                if _path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
+                if path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
                     return False
 
                 path_point_1 = path_point_2
@@ -136,7 +154,7 @@ def _chromosome_valid(chromosome, obstacles, path_points):
     
     return True
 
-def _path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
+def path_overlaps_obstacle(path_point_1, path_point_2, obstacles):
     path = LineString([path_point_1, path_point_2])
 
     for obstacle in obstacles:
