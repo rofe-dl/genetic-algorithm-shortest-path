@@ -11,7 +11,7 @@ def main():
     _init_obstacles()
     _init_path_points()
 
-    _check_path_validity()
+    _init_path_validity()
 
     start(obstacles, path_points, path_validity)
     
@@ -41,7 +41,7 @@ def _init_obstacles():
             obstacle = eval(parser['Hardcoded Obstacles'][f"obstacle_{i+1}"])
             obstacles.append(obstacle)
 
-def _check_path_validity():
+def _init_path_validity():
     
     for i, path_point_start in enumerate(path_points):
 

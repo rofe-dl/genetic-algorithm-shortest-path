@@ -95,14 +95,8 @@ def _generate_population(path_points, obstacles, path_validity):
     population = []
     print('Generating initial population, please wait ....')
     for i in range(population_size):
-        while True:
-
-            chromosome = _generate_chromosome(path_points, path_validity)
-            population.append(chromosome)
-
-            # if _chromosome_valid(chromosome, obstacles, path_points):
-            #     population.append(chromosome)
-            #     break
+        chromosome = _generate_chromosome(path_points, path_validity)
+        population.append(chromosome)
 
     print('Successfully created initial population')
     print('Simulating genetic algorithm for path planning .... (Press Ctrl+C to stop)')
@@ -111,26 +105,29 @@ def _generate_population(path_points, obstacles, path_validity):
 def _generate_chromosome(path_points, path_validity):
 
     chromosome = '1' # source is always visited
-    previous_path_point = path_points[0] # keep track of the previous selected path point
-
-    # for i in range(len(path_points) - 2):
-    #     chromosome += '0' if randint(1, 10) > 5 else '1'
-    # chromosome += '1' # goal is always visited
+    previous_path_point = path_points[0] # keep track of the previous path point that was 1
     
     for i in range(1, len(path_points)):
         path_point = path_points[i]
 
+        if i == (len(path_points) - 1) and not path_validity[previous_path_point][i]:
+            return _generate_chromosome(path_points, path_validity)
+
         if path_validity[previous_path_point][i]:
-            gene = '0' if randint(1, 10) > 5 else '1'
+
+            if i == (len(path_points) - 1):
+                gene = '1'
+            else:
+                gene = '0' if randint(1, 10) > 5 else '1'
 
             if gene == '1':
                 previous_path_point = path_point
-                chromosome += gene
+            
+            chromosome += gene
 
         else:
             chromosome += '0'
 
-        # update previous path point
     return chromosome
 
 def _chromosome_valid(chromosome, obstacles, path_points):
