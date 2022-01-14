@@ -95,7 +95,11 @@ def _generate_population(path_points, obstacles, path_validity):
     population = []
     print('Generating initial population, please wait ....')
     for i in range(population_size):
-        chromosome = _generate_chromosome(path_points, path_validity)
+        while True:
+            chromosome = _generate_chromosome(path_points, path_validity)
+            if chromosome:
+                break
+            
         population.append(chromosome)
 
     print('Successfully created initial population')
@@ -111,7 +115,7 @@ def _generate_chromosome(path_points, path_validity):
         path_point = path_points[i]
 
         if i == (len(path_points) - 1) and not path_validity[previous_path_point][i]:
-            return _generate_chromosome(path_points, path_validity)
+            return False
 
         if path_validity[previous_path_point][i]:
 

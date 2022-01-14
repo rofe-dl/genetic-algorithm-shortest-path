@@ -22,12 +22,14 @@ def _generate_obstacle():
 
     max_width = int(parser['Obstacles']['max_width'])
     max_height = int(parser['Obstacles']['max_height'])
+    min_width = int(parser['Obstacles']['min_width'])
+    min_height = int(parser['Obstacles']['min_height'])
 
     point_x_1 = randint(x_start + 2, x_end - 2)
     point_y_1 = randint(y_start + 2, y_end - 2)
 
-    width = randint(1, max_width)
-    height = randint(1, max_height)
+    width = randint(min_width, max_width)
+    height = randint(min_height, max_height)
     
     # to prevent obstacles from forming at the very edge of the axes
     # point_x_2 = point_x_1 + width if point_x_1+width <= 0.6 * x_end else point_x_1 - width
