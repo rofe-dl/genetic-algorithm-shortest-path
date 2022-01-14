@@ -42,7 +42,7 @@ There are hardcoded obstacles and path points available too for comparison purpo
 
 ## Improvements
 
-The method is considerably bottlenecked by the valid chromosome check when initializing the first population. I've used [Shapely](https://pypi.org/project/Shapely/) for any kind of collision detections and intersections between path points, obstacles or paths. Everytime a chromosome/path is generated randomly for the population, it runs a check over all the obstacles to see if any of them lie in its path. If it does, the chromosome is discarded and another is generated. This slows down a lot if the map is difficult or population size is huge. It can be improved if only obstacles nearby are checked, a chromosome repair system is used, or a better collision algorithm is tried.
+After the crossover process, the chromosome goes through a validity check to see if it encounters any obstacles. If it does, the chromosome is discarded and crossover is performed again. There is scope of improvement here by introducing a chromosome repair system that will fix the bad bits by attaching to another valid path point nearby instead of discarding the whole chromosome as a whole.
 
 ## Conclusion
 
