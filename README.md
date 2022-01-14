@@ -44,6 +44,8 @@ There are hardcoded obstacles and path points available too for comparison purpo
 
 After the crossover process, the chromosome goes through a validity check to see if it encounters any obstacles. If it does, the chromosome is discarded and crossover is performed again. There is scope of improvement here by introducing a chromosome repair system that will fix the bad bits by attaching to another valid path point nearby instead of discarding the whole chromosome as a whole.
 
+Instead of randomly generating obstacles all around, it could be better to create them equally distributed throughout the space still at random. It's seen that sometimes most obstacles lie leaning towards the edge or leaving gaps around the map, making path finding easy. So an equal distribution at the center and at the edges could yield better results.
+
 ## Conclusion
 
 While slow, it is a tradeoff made to make a more adaptable algorithm that can work in more dynamic natures without manual intervention or setups. In some cases, it can even come up with shorter paths. Speed can be improved by coming up with a better chromosome generation.
