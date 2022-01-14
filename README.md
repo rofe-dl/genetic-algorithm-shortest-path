@@ -28,8 +28,8 @@ There are hardcoded obstacles and path points available too for comparison purpo
 
 ## Simulation
 
-![demo](https://raw.githubusercontent.com/rofe-dl/genetic-algorithm-shortest-path/master/demos/gif_demo.gif)
-![demo2](https://raw.githubusercontent.com/rofe-dl/genetic-algorithm-shortest-path/master/demos/gif_demo2.gif)
+![demo](https://raw.githubusercontent.com/rofe-dl/genetic-algorithm-shortest-path/master/demos/demo1.gif)
+![demo2](https://raw.githubusercontent.com/rofe-dl/genetic-algorithm-shortest-path/master/demos/demo2.gif)
 
 ## Details
 
