@@ -43,7 +43,17 @@ There are hardcoded obstacles and path points available too for comparison purpo
 
 ## Improvements
 
-After the crossover process, the chromosome goes through a validity check to see if it encounters any obstacles. If it does, the chromosome is discarded and crossover is performed again. There is scope of improvement here by introducing a chromosome repair system that will fix the bad bits by attaching to another valid path point nearby instead of discarding the whole chromosome as a whole.
+Some improvements can possibly be made to the simulation that could boost the
+performance. First, when connections between path points are being validated, we can
+just check against nearby obstacles instead of going over every obstacle on the map
+and avoid ones farther away.
+
+Secondly, despite some optimizations, there are still instances where a very difficult
+map is randomly generated. For example, an obstacle being generated right in front of
+the source, leaving no way out from the starting node. In such cases, solutions are
+impossible to find and the simulation gets stuck in a loop trying to come up with
+chromosomes to solve it. Edge cases like these can be handled to improve the
+program
 
 Instead of randomly generating obstacles all around, it could be better to create them equally distributed throughout the space still at random. It's seen that sometimes most obstacles lie leaning towards the edge or leaving gaps around the map, making path finding easy. So an equal distribution at the center and at the edges could yield better results.
 
