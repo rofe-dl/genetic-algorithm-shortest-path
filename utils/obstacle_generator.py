@@ -3,6 +3,7 @@ from random import randint
 from shapely.geometry.polygon import Polygon
 
 def generate_obstacles(obstacles, number_of_obstacles):
+    print('Generating obstacles ....')
     for i in range(number_of_obstacles):
 
         while True:
