@@ -21,14 +21,9 @@ def _init_path_points():
         generate_path_points(path_points, obstacles)
 
     else:
-
-        path_points.append(eval(parser['Hardcoded Path Points']['source']))
-
         # eval will create the list from the string representation of list in config.ini
         for element in eval(parser['Hardcoded Path Points']['path_points']):
             path_points.append(element)
-
-        path_points.append(eval(parser['Hardcoded Path Points']['goal']))
 
 def _init_obstacles():
 
